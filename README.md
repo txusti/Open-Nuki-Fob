@@ -30,3 +30,6 @@ To enter DFU mode, press the button on the fob 5 times and hold it down on the 5
 
 ## Hardware
 I used a ST Link v2 to flash the firmware to the NRF52832. For the fob, I use cheap NRF52832 based BLE Beacons by Radioland China, which already come with a battery slot, button, led and keychain case. The build directory contains a prebuilt hex file that you can flash on the afformentioned Beacon.
+
+## Contributions
+- @pohlond: Fix to work with Nuki V3

@@ -460,7 +460,7 @@ static void on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context) {
             reset_shutdown_timer();
             nrf_ble_scan_stop();
             connection_handle = p_ble_evt->evt.gap_evt.conn_handle;
-            application_state = AS_WAIT_FOR_MTU_UPDATE;
+            application_state = AS_MTU_UPDATED;
             break;
 
         case BLE_GAP_EVT_TIMEOUT:

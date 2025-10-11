@@ -2,6 +2,8 @@
 #include "bt_comm_nrf.h"
 #include "nrf_log.h"
 
+uint8_t send_buffer[200];
+
 static void (*m_response_callback)(void*, uint8_t*, uint16_t) = NULL;
 static uint16_t m_out_message_length = 0;
 static uint16_t m_out_message_progress = 0;
