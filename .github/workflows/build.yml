@@ -7,11 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install ARM toolchain
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y make gcc-arm-none-eabi
-          
       - name: Clone zilluss repo
         run: git clone https://github.com/zilluss/Open-Nuki-Fob.git repo
       - name: Copy your main.c
@@ -23,14 +22,3 @@ jobs:
         with:
           name: firmware
           path: repo/build/*.hex
-      
-      - name: Copy main.c
-        run: cp main.c nRF5_SDK_17.1.0_dddee560/examples/ble_peripheral/ble_app_uart/pca10040/s132/
-      - name: Build
-        run: cd nRF5_SDK_17.1.0_dddee560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc && make
-      - name: Upload HEX
-        uses: actions/upload-artifact@v4
-        with:
-          name: firmware.hex
-          path: nRF5_SDK_17.1.0_dddee560/examples/ble_peropheral/ble_app_uart/pca10040/s132/armgcc/build/*.hex
-          
