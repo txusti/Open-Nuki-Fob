@@ -15,10 +15,15 @@ jobs:
         run: |
           wget -O /tmp/sdk.zip https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v17.x.x/nRF5_SDK_17.1.0_ddde560.zip
           unzip -q /tmp/sdk.zip -d /tmp/
-      - name: Setup build
+      - name: Setup compiler paths
         run: |
-          mkdir -p /tmp/build
-          cp main.c /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/
+          cat > /tmp/nRF5_SDK_17.1.0_ddde560/components/toolchain/gcc/Makefile.posix <<EOF
+          GNU_INSTALL_ROOT := /usr/bin/
+          GNU_VERSION := 13.3.1
+          GNU_PREFIX := arm-none-eabi
+          EOF
+      - name: Copy main.c
+        run: cp main.c /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/
       - name: Build
         run: |
           cd /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc
