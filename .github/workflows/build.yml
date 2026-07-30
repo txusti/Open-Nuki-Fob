@@ -10,15 +10,21 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y make gcc-arm-none-eabi
-      - name: Clone zilluss repo
-        run: git clone https://github.com/zilluss/Open-Nuki-Fob.git repo
-      - name: Copy your main.c
-        run: cp main.c repo/
+          sudo apt-get install -y make gcc-arm-none-eabi wget unzip
+      - name: Download Nordic SDK
+        run: |
+          wget -O /tmp/sdk.zip https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v17.x.x/nRF5_SDK_17.1.0_ddde560.zip
+          unzip -q /tmp/sdk.zip -d /tmp/
+      - name: Setup build
+        run: |
+          mkdir -p /tmp/build
+          cp main.c /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/
       - name: Build
-        run: cd repo && make
-      - name: Upload HEX
+        run: |
+          cd /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc
+          make
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: repo/build/*.hex
+          path: /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc/build/
