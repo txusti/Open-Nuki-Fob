@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install ARM Toolchain
         run: sudo apt-get install -y arm-none-eabi-gcc make
       - name: Download SDK
@@ -16,7 +16,7 @@ jobs:
       - name: Build
         run: cd nRF5_SDK_17.1.0_dddee560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc && make
       - name: Upload HEX
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: firmware.hex
           path: nRF5_SDK_17.1.0_dddee560/examples/ble_peropheral/ble_app_uart/pca10040/s132/armgcc/build/*.hex
