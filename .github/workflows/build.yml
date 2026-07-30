@@ -1,0 +1,23 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install ARM Toolchain
+        run: sudo apt-get install -y arm-none-eabi-gcc make
+      - name: Download SDK
+        run: wget -q https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v17.x.x/nRF5_SDK_17.1.0_dddee560.zip && unzip -q nRF5_SDK_17.1.0_dddee560.zip
+      - name: Copy main.c
+        run: cp main.c nRF5_SDK_17.1.0_dddee560/examples/ble_peripheral/ble_app_uart/pca10040/s132/
+      - name: Build
+        run: cd nRF5_SDK_17.1.0_dddee560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc && make
+      - name: Upload HEX
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware.hex
+          path: nRF5_SDK_17.1.0_dddee560/examples/ble_peropheral/ble_app_uart/pca10040/s132/armgcc/build/*.hex
+          
