@@ -29,8 +29,9 @@ jobs:
           cd /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc
           sed -i 's/-Werror//g' Makefile
           make
+          find . -name "*.hex" -type f
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc/build/
+          path: /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc/**/*.hex
