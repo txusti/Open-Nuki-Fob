@@ -1,7 +1,4 @@
 name: Build
-  run: |
-    cd /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc
-    make CFLAGS="-Werror="
 
 on: [push]
 
@@ -30,6 +27,7 @@ jobs:
       - name: Build
         run: |
           cd /tmp/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/ble_app_uart/pca10040/s132/armgcc
+          sed -i 's/-Werror//g' Makefile
           make
       - name: Upload artifact
         uses: actions/upload-artifact@v4
