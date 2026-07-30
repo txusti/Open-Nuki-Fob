@@ -7,8 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install ARM Toolchain
-        run: sudo apt-get install -y arm-none-eabi-gcc make
+      - name: Install ARM toolchain
+        run: |
+          sudo apt-get install -y make
+          mkdir -p /opt
+          curl -sL "https://developer.arm.com/-/media/Files/downloads/gnu-rm/13.3.rel1/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz" | tar -xJ -C /opt/
+          echo "/opt/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin" >> $GITHUB_PATH
       - name: Download SDK
         run: wget -q https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v17.x.x/nRF5_SDK_17.1.0_dddee560.zip && unzip -q nRF5_SDK_17.1.0_dddee560.zip
       - name: Copy main.c
